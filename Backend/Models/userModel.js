@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
-const userModel = mongoose.schema({
+const userModel = new mongoose.Schema({
         name: {
                 type: String,
                 required: true,
         },
         email: {
                 type: String,
+                unique: true,
                 required: true,
         },
         password: {
@@ -15,7 +16,6 @@ const userModel = mongoose.schema({
         },
         pic: {
                 type: String,
-                required: true,
                 // default: "https://img.freepik.com/premium-vector/anonymous-user-flat-icon-vector-illustration-with-long-shadow_520826-1932.jpg" ,
                 default: "../Assets/anonymous_user.jpg",
         }

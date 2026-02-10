@@ -62,7 +62,8 @@ const Signup = () => {
                                                                         <HiUpload /> Upload Image
                                                                 </Button>
                                                         </FileUpload.Trigger>
-                                                        <Box flex="1" maxW="300px" overflow="hidden">
+
+                                                        <Box flex="1" maxW="300px" overflow="hidden" >
                                                                 <FileUpload.List
                                                                         sx={{
                                                                                 "& span": {

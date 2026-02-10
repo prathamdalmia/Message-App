@@ -1,7 +1,7 @@
 const express = require("express");
 const connectDB = require("./Config/db");
 const colors = require("colors");
-
+const userRouter = require('./Routes/user.routes');
 require("dotenv").config()
 
 const app = express();
@@ -11,9 +11,7 @@ connectDB()
 app.get("/", (req, res) => {
   res.send("API is Running");
 });
-app.get("/api/chats", (req, res) => {
-  res.status(200).json({ message: "This is Chat Api" })
-})
+app.use("/api/user", userRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
