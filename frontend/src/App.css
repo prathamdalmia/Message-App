@@ -4,7 +4,8 @@ body{
 }
 .App{
   margin: 0;
-  height: 100vh;
+  /* background-color: #3FB7D7; */
+  min-height: 100vh;   /* key to responsive background*/
   display: flex;
   background-image: url("../assets/background.jpg");
   background-size: cover;

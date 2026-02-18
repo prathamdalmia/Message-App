@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
         },
         pic: {
                 type: String,
-                // default: "https://img.freepik.com/premium-vector/anonymous-user-flat-icon-vector-illustration-with-long-shadow_520826-1932.jpg" ,
-                default: "../Assets/anonymous_user.jpg",
+                default: "https://img.freepik.com/premium-vector/anonymous-user-flat-icon-vector-illustration-with-long-shadow_520826-1932.jpg",
+                // default: "../Assets/anonymous_user.jpg",
         }
 }, { timestamps: true, });
 
