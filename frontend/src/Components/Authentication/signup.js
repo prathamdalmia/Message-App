@@ -134,7 +134,8 @@ const Signup = () => {
                                 type: "error",
                                 closable: true
                         })
-                        throw new Error(err);
+                        // throw new Error(err);
+                        setIsLoading(false);
                 }
         }
 
