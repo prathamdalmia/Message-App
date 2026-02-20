@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken');
 const User = require('../Models/userModel');
 
 const verifyUser = expressAsyncHandler(async (req, res, next) => {
-        authHeader = req.headers.authorization;
+        const authHeader = req.headers.authorization;
 
-        if (!authHeader || !authHeader.startWith("Bearer")) {
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
                 res.status(400).json({ message: "No Valid Token Provided" });
                 throw new Error("No valid Token Provided".red);
         }
@@ -13,13 +13,13 @@ const verifyUser = expressAsyncHandler(async (req, res, next) => {
 
         const decodedUserId = jwt.verify(token, process.env.TOKEN_ACCESS);
 
-        const user = User.findById(decodedUserId.id).select("-password");
+        const user = await User.findById(decodedUserId.id).select("-password");
 
         if (!user) {
-                res.status(401).json({ message: "User Not Found " });
+                res.status(401);
                 throw new Error("User Not Found".red);
         }
-        res.user = user;
+        req.user = user;
         next();
 });
 

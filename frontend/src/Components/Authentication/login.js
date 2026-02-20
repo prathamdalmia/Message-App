@@ -51,7 +51,7 @@ const Login = () => {
                         const { data } = await axios.post('/api/user/login', body, config);
 
 
-                        console.log(data.success);
+                        console.log(data);
                         toaster.create({
                                 description: "Registration is Successful",
                                 type: "success",

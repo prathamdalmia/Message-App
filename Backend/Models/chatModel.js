@@ -9,9 +9,9 @@
 
 */
 
-const mongoose = require(mongoose);
+const mongoose = require("mongoose");
 
-const chatModel = mongoose.schema(
+const chatModel = mongoose.Schema(
         {
                 chatName: {
                         type: String,
@@ -23,7 +23,7 @@ const chatModel = mongoose.schema(
                 },
                 users: [{
                         type: mongoose.Schema.Types.ObjectId,
-                        ref: "Users",
+                        ref: "User",
                 }],
                 latestMessage: {
                         type: mongoose.Schema.Types.ObjectId,
@@ -31,7 +31,7 @@ const chatModel = mongoose.schema(
                 },
                 groupAdmin: {
                         type: mongoose.Schema.Types.ObjectId,
-                        ref: "Users",
+                        ref: "User",
                 }
         },
         { timestamps: true, }
