@@ -5,15 +5,15 @@ import App from './App';
 import { ChakraProvider } from "@chakra-ui/react"
 import { system } from './theme';
 import { BrowserRouter } from 'react-router-dom'
+import ChatProvider from './Context/chatProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <ChatProvider>
     <BrowserRouter>
       <ChakraProvider value={system}>
         <App />
       </ChakraProvider>
     </BrowserRouter>
-
-  </React.StrictMode>
+  </ChatProvider>
 );
