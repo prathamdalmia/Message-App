@@ -6,7 +6,7 @@ const verifyUser = expressAsyncHandler(async (req, res, next) => {
         const authHeader = req.headers.authorization;
 
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
-                res.status(400).json({ message: "No Valid Token Provided" });
+                res.status(400);
                 throw new Error("No valid Token Provided".red);
         }
         const token = authHeader.split(" ")[1];

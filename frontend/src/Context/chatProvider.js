@@ -6,20 +6,20 @@ const ChatContext = createContext();
 
 
 const ChatProvider = ({ children }) => {
-        const [userToken, setUserToken] = useState();
+        const [user, setUser] = useState();
 
         const history = useHistory();
 
         useEffect(() => {
-                const userToken = JSON.parse(localStorage.getItem("userToken"));
-                setUserToken(userToken);
-                if (!userToken) {
+                const user = JSON.parse(localStorage.getItem("userInfo"));
+                setUser(user);
+                if (!user) {
                         history.push('/');
                 }
         }, [history]);
 
         return (
-                <ChatContext.Provider value={{ userToken, setUserToken }}>
+                <ChatContext.Provider value={{ user, setUser }}>
                         {children}
                 </ChatContext.Provider>
         );

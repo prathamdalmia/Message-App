@@ -118,12 +118,12 @@ const Signup = () => {
                         if (pic) body.pic = pic;
                         const { data } = await axios.post('/api/user/signup', body, config);
                         toaster.create({
-                                description: "Registration is Successful",
+                                description: data.message,
                                 type: "success",
                                 closable: true
                         });
 
-                        localStorage.setItem('userToken', JSON.stringify(data));
+                        localStorage.setItem('userInfo', JSON.stringify(data));
                         setIsLoading(false);
                         history.push('/chats');
 

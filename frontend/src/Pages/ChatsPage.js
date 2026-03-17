@@ -7,13 +7,19 @@ import MyChat from "../Components/Miscellaneous/MyChat";
 import ChatBox from "../Components/Miscellaneous/ChatBox";
 
 const ChatsPage = () => {
-        const { userToken } = ChatState();
+        const { user } = ChatState();
 
         return <div style={{ width: "100%" }}>
-                {userToken && <SideDrawer />}
-                <Box>
-                        {userToken && <MyChat />}
-                        {userToken && <ChatBox />}
+                {user && <SideDrawer />}
+                <Box
+                        display={"flex"}
+                        justifyContent={"space-between"}
+                        w={"100%"}
+                        h={"91.5vh"}
+                        p={"10px"}
+                >
+                        {user && <MyChat />}
+                        {user && <ChatBox />}
                 </Box>
         </div>
 

@@ -5,6 +5,7 @@ import { PasswordInput } from "../ui/password-input"
 import { toaster } from "../ui/toaster";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { ChatState } from '../../Context/chatProvider';
 
 const Login = () => {
 
@@ -13,6 +14,8 @@ const Login = () => {
         const [password, setPassword] = useState("");
         const [isLoading, setIsLoading] = useState(false);
         const history = useHistory();
+
+        const { setUser } = ChatState();
 
 
         const submitHandler = async () => {
@@ -51,14 +54,15 @@ const Login = () => {
                         const { data } = await axios.post('/api/user/', body, config);
 
 
-                        console.log(data);
+                        // console.log(data);
                         toaster.create({
-                                description: "Registration is Successful",
+                                description: data.message,
                                 type: "success",
                                 closable: true
                         });
 
-                        localStorage.setItem('userToken', JSON.stringify(data));
+                        localStorage.setItem('userInfo', JSON.stringify(data));
+                        setUser(data);
                         setIsLoading(false);
                         history.push('/chats');
 
