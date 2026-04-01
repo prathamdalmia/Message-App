@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
-import { Box, Button, CloseButton, Drawer, Input, Portal, Text } from "@chakra-ui/react"
+import { Box, Button, CloseButton, Drawer, Input, Portal, Spinner, Text } from "@chakra-ui/react"
 import { Tooltip } from "../ui/tooltip"
 import { toaster } from '../ui/toaster';
 import axios from 'axios';
 import ChatLoading from './chatLoading';
 import UserListItem from './userListItem';
+import { ChatState } from '../../Context/chatProvider';
 
 const DrawerComponent = ({ userToken }) => {
         const [open, setOpen] = useState(false);
         const [search, setSearch] = useState("");
         const [loading, setLoading] = useState(false);
         const [searchResult, setSearchResult] = useState([]);
+        const [chatLoading, setChatLoading] = useState(false);
+        const { setSelectedChat, chats, setChats } = ChatState();
+        // const context = ChatState();
+        // console.log("CONTEXT VALUE:", context);
 
         const searchHandler = async () => {
 
@@ -45,8 +50,43 @@ const DrawerComponent = ({ userToken }) => {
                 }
         }
 
-        const accessChat = () => {
-                setOpen(false);
+        const accessChat = async (userId) => {
+                try {
+                        setChatLoading(true);
+                        const config = {
+                                headers: {
+                                        "Content-type": "application/json",
+                                        Authorization: `Bearer ${userToken}`,
+                                },
+                        };
+
+                        const { data } = await axios.post('/api/chat/', { userId }, config);
+                        const chatObj = data.chat[0];
+
+
+
+
+                        const safeChats = Array.isArray(chats) ? chats : [];
+
+                        if (!safeChats.find((c) => c._id === chatObj._id)) {
+                                setChats([chatObj, ...safeChats]);
+                        }
+
+                        console.log("chats value:", chats);
+                        console.log("isArray:", Array.isArray(chats));
+
+
+                        setSelectedChat(data);
+                        setChatLoading(false);
+                        setOpen(false);
+                } catch (error) {
+                        toaster.create({
+                                title: "Failed to Load Chats",
+                                description: error.message,
+                                type: "error",
+                                closable: true,
+                        });
+                }
         };
 
 
@@ -80,9 +120,11 @@ const DrawerComponent = ({ userToken }) => {
                                                                 searchResult.map((user) => {
                                                                         return (
 
-                                                                                <UserListItem key={user._id} user={user} handlerFunction={accessChat} />)
+                                                                                <UserListItem key={user._id} user={user} handlerFunction={() => accessChat(user._id)} />)
                                                                 })
                                                         )}
+
+                                                        {chatLoading && <Spinner ml={"auto"} display={"flex"} />}
                                                 </Drawer.Body>
 
                                                 <Drawer.CloseTrigger asChild>
