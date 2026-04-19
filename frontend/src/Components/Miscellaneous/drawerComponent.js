@@ -4,8 +4,9 @@ import { Tooltip } from "../ui/tooltip"
 import { toaster } from '../ui/toaster';
 import axios from 'axios';
 import ChatLoading from './chatLoading';
-import UserListItem from './userListItem';
+import UserListItem from './UserListComponents/userListItem';
 import { ChatState } from '../../Context/chatProvider';
+import { getRandomColor } from '../../Config/getRandomColor';
 
 const DrawerComponent = ({ userToken }) => {
         const [open, setOpen] = useState(false);
@@ -16,6 +17,15 @@ const DrawerComponent = ({ userToken }) => {
         const { setSelectedChat, chats, setChats } = ChatState();
         // const context = ChatState();
         // console.log("CONTEXT VALUE:", context);
+
+
+
+
+
+
+
+
+
 
         const searchHandler = async () => {
 
@@ -36,6 +46,7 @@ const DrawerComponent = ({ userToken }) => {
                                 },
                         }
                         const { data } = await axios.get(`/api/user/search?search=${search}`, config);
+                        // console.log(data);
                         setLoading(false);
                         setSearchResult(data);
 
@@ -61,22 +72,12 @@ const DrawerComponent = ({ userToken }) => {
                         };
 
                         const { data } = await axios.post('/api/chat/', { userId }, config);
-                        const chatObj = data.chat[0];
 
-
-
-
-                        const safeChats = Array.isArray(chats) ? chats : [];
-
-                        if (!safeChats.find((c) => c._id === chatObj._id)) {
-                                setChats([chatObj, ...safeChats]);
+                        if (!chats?.find((c) => c._id === data.chat._id)) {
+                                setChats([data.chat, ...chats]);
                         }
 
-                        console.log("chats value:", chats);
-                        console.log("isArray:", Array.isArray(chats));
-
-
-                        setSelectedChat(data);
+                        setSelectedChat(data.chat);
                         setChatLoading(false);
                         setOpen(false);
                 } catch (error) {
@@ -120,7 +121,7 @@ const DrawerComponent = ({ userToken }) => {
                                                                 searchResult.map((user) => {
                                                                         return (
 
-                                                                                <UserListItem key={user._id} user={user} handlerFunction={() => accessChat(user._id)} />)
+                                                                                <UserListItem key={user._id} user={user} handlerFunction={() => accessChat(user._id)} color={getRandomColor()} />)
                                                                 })
                                                         )}
 

@@ -1,10 +1,11 @@
-import { Avatar, Portal } from "@ark-ui/react";
-import { AvatarGroup, Box, Button, Code, HStack, Stack, Text, Menu } from '@chakra-ui/react';
+import { Portal } from "@ark-ui/react";
+import { Avatar, AvatarGroup, Box, Button, Code, HStack, Stack, Text, Menu, defineStyle } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { ChatState } from "../../Context/chatProvider";
 import ProfileModal from "./profileModal";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import DrawerComponent from "./drawerComponent";
+import { getRandomColor } from "../../Config/getRandomColor";
 
 const SideDrawer = () => {
         const [search, setSearch] = useState("");
@@ -20,6 +21,11 @@ const SideDrawer = () => {
                 localStorage.removeItem("userInfo");
                 history.push("/")
         }
+
+
+
+
+
 
 
         return (
@@ -70,10 +76,10 @@ const SideDrawer = () => {
                                                                                                 borderRadius: "9999px",
                                                                                                 overflow: "hidden",
                                                                                         }}
+
+                                                                                        colorPalette={getRandomColor()}
                                                                                 >
-                                                                                        <Avatar.Fallback>
-                                                                                                {user?.name?.[0]}
-                                                                                        </Avatar.Fallback>
+                                                                                        <Avatar.Fallback name={user?.name} />
 
                                                                                         <Avatar.Image
                                                                                                 src={user?.pic}
