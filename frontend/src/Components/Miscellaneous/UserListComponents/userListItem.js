@@ -1,7 +1,16 @@
-import { Avatar, Box, Text } from '@chakra-ui/react'
+import { Avatar, Box, defineStyle, Text } from '@chakra-ui/react'
 import React from 'react'
 
-const UserListItem = ({ user, handlerFunction }) => {
+const UserListItem = ({ user, handlerFunction, color }) => {
+
+
+
+        const ringCss = defineStyle({
+                outlineWidth: "2px",
+                outlineColor: color,
+                outlineOffset: "2px",
+                outlineStyle: "solid",
+        })
 
         return (
                 <Box
@@ -25,10 +34,10 @@ const UserListItem = ({ user, handlerFunction }) => {
                                         borderRadius: "9999px",
                                         overflow: "hidden",
                                 }}
+
+                                css={ringCss} colorPalette={color}
                         >
-                                <Avatar.Fallback>
-                                        {user?.name?.[0]}
-                                </Avatar.Fallback>
+                                <Avatar.Fallback name={user?.name} />
 
                                 <Avatar.Image
                                         src={user?.pic}

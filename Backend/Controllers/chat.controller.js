@@ -33,7 +33,7 @@ const accessChat = asyncHandler(async (req, res) => {
 
 
         if (isChat.length > 0) {
-                res.status(200).json({ chat: isChat });
+                res.status(200).json({ chat: isChat[0] });
         } else {
                 var chatData = {
                         chatName: "one-one",
@@ -87,7 +87,7 @@ const createGroupChat = asyncHandler(async (req, res) => {
                 throw new Error("Name or Users not Provided");
         }
 
-        var parsedUsers = JSON.parse(req.body.users);
+        var parsedUsers = JSON.parse(users);
 
         if (parsedUsers.length < 1) {
                 res.status(400);
