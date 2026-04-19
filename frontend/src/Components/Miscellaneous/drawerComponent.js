@@ -3,7 +3,7 @@ import { Box, Button, CloseButton, Drawer, Input, Portal, Spinner, Text } from "
 import { Tooltip } from "../ui/tooltip"
 import { toaster } from '../ui/toaster';
 import axios from 'axios';
-import ChatLoading from './chatLoading';
+import ChatLoading from '../chatLoading';
 import UserListItem from './UserListComponents/userListItem';
 import { ChatState } from '../../Context/chatProvider';
 import { getRandomColor } from '../../Config/getRandomColor';

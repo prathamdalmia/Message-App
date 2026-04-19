@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { ChatState } from '../../Context/chatProvider'
-import { toaster } from '../ui/toaster';
+import { ChatState } from '../Context/chatProvider'
+import { toaster } from './ui/toaster';
 import axios from 'axios';
 import { Box, Button, Stack, Text } from '@chakra-ui/react';
 import { RiAddLine } from "react-icons/ri";
 import ChatLoading from './chatLoading';
-import { getSender } from '../../Config/chatLogics';
-import GroupChatModal from './groupChatModal';
+import { getSender } from '../Config/chatLogics';
+import GroupChatModal from './Miscellaneous/groupChatModal';
 
-const MyChat = () => {
+const MyChat = ({ fetchAgain }) => {
 
         const [loggedUser, setLoggedUser] = useState();
         const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
@@ -39,7 +39,7 @@ const MyChat = () => {
                 setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
                 fetchChats();
 
-        }, [])
+        }, [fetchAgain])
 
         return (
                 <Box
@@ -100,7 +100,7 @@ const MyChat = () => {
                                                                 borderRadius={"lg"}
                                                                 key={chat._id}
                                                         >
-                                                                <Text>{!chat.isGroupChat ? (getSender(loggedUser, chat.users)) : (chat.chatName)}</Text>
+                                                                <Text>{!chat.isGroupChat ? (getSender(loggedUser, chat.users).name) : (chat.chatName)}</Text>
                                                         </Box>
                                                 ))}
                                         </Stack>) :
