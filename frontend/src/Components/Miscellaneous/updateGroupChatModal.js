@@ -7,7 +7,7 @@ import UserListItem from './UserListComponents/userListItem'
 import { getRandomColor } from '../../Config/getRandomColor'
 import axios from 'axios'
 
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 
         const [groupChatName, setGroupChatName] = useState("");
         const [search, setSearch] = useState("");
@@ -61,6 +61,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
 
                         user._id === userToDelete._id ? setSelectedChat() : setSelectedChat(data.group);
                         setFetchAgain(!fetchAgain);
+                        fetchMessages();
                         setLoading(false);
 
 
