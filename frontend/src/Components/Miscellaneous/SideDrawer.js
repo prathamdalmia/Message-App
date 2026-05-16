@@ -1,5 +1,5 @@
 import { Portal } from "@ark-ui/react";
-import { Avatar, AvatarGroup, Box, Button, Code, HStack, Stack, Text, Menu, defineStyle } from '@chakra-ui/react';
+import { Avatar, AvatarGroup, Box, Button, Code, HStack, Stack, Text, Menu, defineStyle, Badge } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { ChatState } from "../../Context/chatProvider";
 import ProfileModal from "./profileModal";
@@ -15,7 +15,7 @@ const SideDrawer = () => {
         const [notiOpen, setNotiOpen] = useState(false);
         const [profileOpen, setProfileOpen] = useState(false);
         const history = useHistory();
-        const { user } = ChatState();
+        const { user, notification, setNotification, setSelectedChat } = ChatState();
 
         const logoutHangler = () => {
                 localStorage.removeItem("userInfo");
@@ -47,17 +47,29 @@ const SideDrawer = () => {
                                                 <Menu.Root open={notiOpen} onOpenChange={(e) => setNotiOpen(e.open)}>
                                                         <Menu.Trigger asChild>
                                                                 <Button variant="ghost">
-                                                                        <i className="fas fa-bell" style={{ fontSize: "20px" }}></i>
+                                                                        <span className="relative inline-block">
+                                                                                <i className="fas fa-bell" style={{ fontSize: "20px" }}></i>
+                                                                                {notification.length ? <span className="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-red-500 text-white text-[10px] font-bold shadow-md border border-white">
+
+                                                                                        <Badge variant="solid" colorPalette="red" size="xs">{notification.length}</Badge>
+                                                                                </span> : null}
+                                                                        </span>
                                                                 </Button>
                                                         </Menu.Trigger>
                                                         <Portal>
                                                                 <Menu.Positioner>
                                                                         <Menu.Content>
-                                                                                <Menu.Item value="new-txt">New Text File</Menu.Item>
-                                                                                <Menu.Item value="new-file">New File...</Menu.Item>
-                                                                                <Menu.Item value="new-win">New Window</Menu.Item>
-                                                                                <Menu.Item value="open-file">Open File...</Menu.Item>
-                                                                                <Menu.Item value="export">Export</Menu.Item>
+                                                                                {!notification.length ? <Menu.Item value="new-txt">No New Messages</Menu.Item> :
+
+
+                                                                                        notification.map((notif) => (
+                                                                                                <Menu.Item key={notif._id} onClick={() => { setSelectedChat(notif.chat); setNotification(notification.filter((n) => n !== notif)) }}>{notif.chat.isGroupChat ? `New Message in ${notif.chat.chatName} from ${notif.sender.name}` : `New Message from ${notif.sender.name}`}</Menu.Item>
+                                                                                        ))
+
+                                                                                }
+
+
+
                                                                         </Menu.Content>
                                                                 </Menu.Positioner>
                                                         </Portal>
